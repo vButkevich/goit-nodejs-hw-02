@@ -33,8 +33,9 @@ export const setupServer = () => {
   app.get('/contacts', async (req, res) => {
     const contacts = await getAllContacts();
     res.status(200).json({
-      status: 'success',
+      status: 200,
       message: 'Successfully found contacts!',
+      count: contacts.length,
       data: contacts,
     });
   });
@@ -43,7 +44,7 @@ export const setupServer = () => {
     const { contactId } = req.params;
     if (contactId.length != 24) {
       res.status(400).json({
-        status: '400',
+        status: 400,
         message: `ContactId:[${contactId}] is invalid`,
         data: [],
       });
@@ -53,7 +54,7 @@ export const setupServer = () => {
     const contact = await getContactById(contactId);
     if (!contact) {
       res.status(404).json({
-        status: '404',
+        status: 404,
         message: `Contact not found with id:[${contactId}]`,
         data: [],
       });
@@ -69,12 +70,14 @@ export const setupServer = () => {
 
   app.use('*', (req, res, next) => {
     res.status(404).json({
+      status: 400,
       message: 'Not found',
     });
   });
 
   app.use((err, req, res, next) => {
     res.status(500).json({
+      status: 500,
       message: 'Something went wrong',
       error: err.message,
     });
