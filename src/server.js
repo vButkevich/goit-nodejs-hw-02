@@ -2,7 +2,6 @@ import cors from 'cors';
 import pino from 'pino-http';
 import express from 'express';
 import { env } from './utils/env.js';
-// import { getAllContacts, getContactById } from './services/contactsService.js';
 import contactsRouter from './routers/contactsRouter.js';
 import { errorHandler } from './middlewares/errorHandler.js';
 import { notFoundHandler } from './middlewares/notFoundHandler.js';

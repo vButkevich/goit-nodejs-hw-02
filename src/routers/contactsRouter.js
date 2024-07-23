@@ -11,7 +11,6 @@ import { controllerWrapper } from '../controllers/controllerWrapper.js';
 
 const router = Router();
 
-
 router.post('/contacts', controllerWrapper(createContactController));
 router.put('/contacts/:contactId', controllerWrapper(upsertContactController));
 router.delete('/contacts/:contactId', controllerWrapper(deleteContactByIdController));
