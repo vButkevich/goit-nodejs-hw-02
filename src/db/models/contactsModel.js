@@ -13,7 +13,7 @@ const contactsSchema = new Schema(
     },
     email: {
       type: String,
-      match: "/.+\\@.+\\..+/",
+      // match: '/.+\\@.+\\..+/',
       required: false,
     },
     isFavourite: {
