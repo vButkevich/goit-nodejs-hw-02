@@ -1,5 +1,6 @@
-import { model } from 'mongoose';
-import { Schema } from 'mongoose';
+// import { model } from 'mongoose';
+// import { Schema } from 'mongoose';
+import { model, Schema } from 'mongoose';
 
 const contactsSchema = new Schema(
   {
