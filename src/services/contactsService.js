@@ -7,12 +7,33 @@ export const getContactsService = async ({
   perPage = 10,
   sortOrder = SORT_ORDER.ASC,
   sortBy = '_id',
+  filter = {},
 }) => {
   const limit = perPage;
   const skip = (page - 1) * perPage;
 
   const contactsQuery = ContactsCollection.find();
+  const contactsTotal = await ContactsCollection.find()
+  .merge(contactsQuery)
+  .countDocuments();
 
+  console.log({contactsTotal});
+  if (filter.name) {
+    contactsQuery.where('name').regex(new RegExp(filter.name, 'i'));
+  }
+  if (filter.email) {
+    contactsQuery.where('email').regex(new RegExp(filter.email, 'i'));
+  }
+  if (filter.phone) {
+    contactsQuery.where('phoneNumber').regex(new RegExp(filter.phone, 'i'));
+  }
+  if (filter.type) {
+    contactsQuery.where('contactType').equals(filter.type);
+  }
+  if (filter.favorite) {
+    contactsQuery.where('isFavourite').equals(filter.favorite);
+  }
+// console.log({contactsQuery});
   const [contactsCount, contacts] = await Promise.all([
     ContactsCollection.find().merge(contactsQuery).countDocuments(),
     contactsQuery
@@ -22,11 +43,12 @@ export const getContactsService = async ({
       .exec(),
   ]);
 
-  const paginationData = calculatePaginationData(contactsCount, perPage, page);
+  // const paginationData = calculatePaginationData(contactsCount, perPage, page);
+  const paginationData = calculatePaginationData(contactsTotal, perPage, page);
 
   return {
     contacts: contacts,
-    sort: { sortBy, sortOrder },
+    // sort: { sortBy, sortOrder },
     ...paginationData,
   };
 };
