@@ -38,8 +38,9 @@ export const createContactController = async (req, res) => {
   const req_body = req.body;
   console.log({ req_body });
 
-  res.status(201).json({
-    status: 201,
+  const status = 201;
+  res.status(status).json({
+    status,
     message: `Successfully created a contact!`,
     data: contact,
   });
