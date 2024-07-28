@@ -81,6 +81,28 @@ export const logoutAuthUserController = async (req, res) => {
   res.status(204).send();
 };
 
+
+
+export const refreshAuthUserSessionController = async (req, res) => {
+  const reqc =req.cookies;
+  const resc = res.cookies;
+  console.log({reqc});
+  console.log({resc});
+  const session = await refreshAuthUsersSessionService({
+    sessionId: req.cookies.sessionId,
+    refreshToken: req.cookies.refreshToken,
+  });
+console.log({session});
+  setupAuthUserSession(res, session);
+
+  res.json({
+    status: 200,
+    message: 'Successfully refreshed a session!',
+    data: {
+      accessToken: session.accessToken,
+    },
+  });
+};
 const setupAuthUserSession = (res, session) => {
   const expires = new Date(Date.now() + ONE_DAY);
   res.cookie('sessionId', session._id, {
@@ -90,22 +112,5 @@ const setupAuthUserSession = (res, session) => {
   res.cookie('refreshToken', session.refreshToken, {
     httpOnly: true,
     expires,
-  });
-};
-
-export const refreshAuthUserSessionController = async (req, res) => {
-  const session = await refreshAuthUsersSessionService({
-    sessionId: req.cookies.sessionId,
-    refreshToken: req.cookies.refreshToken,
-  });
-
-  setupAuthUserSession(res, session);
-
-  res.json({
-    status: 200,
-    message: 'Successfully refreshed a session!',
-    data: {
-      accessToken: session.accessToken,
-    },
   });
 };

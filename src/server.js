@@ -6,7 +6,7 @@ import contactsRouter from './routers/contactsRouter.js';
 import authUserRouter from './routers/authUserRouter.js';
 import { errorHandler } from './middlewares/errorHandler.js';
 import { notFoundHandler } from './middlewares/notFoundHandler.js';
-
+import cookieParser from 'cookie-parser';
 
 export const setupServer = () => {
   const PORT = Number(env('PORT', '3000'));
@@ -32,7 +32,7 @@ export const setupServer = () => {
       limit: '100kb',
     }),
   );
-
+  app.use(cookieParser());
 
 
   app.get('/', (req, res) => {
