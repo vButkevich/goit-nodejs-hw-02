@@ -11,4 +11,4 @@ const authUserSessionSchema = new Schema(
   { timestamps: true, versionKey: false },
 );
 
-export const AuthUserSessionCollection = model('authUserSessions', authUserSessionSchema);
+export const AuthUserSessionCollection = model('authUserSession', authUserSessionSchema);

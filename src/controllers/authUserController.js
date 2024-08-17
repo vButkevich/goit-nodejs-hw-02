@@ -1,39 +1,49 @@
-import { ONE_DAY } from '../constants/index.js';
+import bcrypt from 'bcrypt';
+import createHttpError from 'http-errors';
+
 import {
-  getAuthUserService,
-  loginAuthUserService,
+  // getAuthUserById,
+  getAuthUserByEmail,
+  getAuthUsersService,
+  createAuthUserService,
   logoutAuthUserService,
-  refreshAuthUsersSessionService,
-  registerAuthUserService,
 } from '../services/authUserService.js';
+import {
+  getAuthUserSessionById,
+  getAuthUserSessionService,
+  refreshAuthUsersSessionService,
+  setupAuthUserSessionCookies,
+  isRefreshTockenExpired,
+} from '../services/authUserSessionService.js';
 
 export const registerAuthUserController = async (req, res) => {
-  const user = await registerAuthUserService(req.body);
+  const { email, name } = req.body;
+  const authUser = await getAuthUserByEmail(email);
+  if (authUser) {
+    throw createHttpError(409, 'Email in use');
+  }
+
+  await createAuthUserService(req.body);
 
   res.status(201).json({
     status: 201,
     message: 'Successfully registered a user!',
-    data: user,
+    data: { name, email },
   });
 };
 
-export const getAuthUserController = async (req, res) => {
-  const authUsers = await getAuthUserService(req.query);
 
-  // // res.status(204).send();
-  // res.json({
-  //   status: 200,
-  //   message: `Successfully patched a student!`,
-  //   // data: result.student,
-  // });
-
-  // const status = 200;
-  // res.status(status).json({
-  //   status,
-  //   message: `Successfully authUserController!`,
-  //   // data: result.contact,
-  // });
-
+export const getAuthController = async (req, res) => {
+  res.send({
+    body: req.body,
+    data: req.data,
+    params: req.params,
+    query: req.query,
+    sender: 'authUserController',
+  });
+};
+export const getAuthUsersController = async (req, res) => {
+  const authUsers = await getAuthUsersService(req.query);
   res.send({
     authUsers,
     body: req.body,
@@ -44,29 +54,27 @@ export const getAuthUserController = async (req, res) => {
   });
 };
 
-export const loginAuthUserController = async (req, res) => {
-  const session = await loginAuthUserService(req.body);
-  //   res.send({ status:res.status,user,body: req.body, data:req.data, params:req.params, query:req.query,sender: 'loginAuthUserController' });
-  // };
-  // export const loginUserController = async (req, res) => {
-  //   const session = await loginUser(req.body);
 
-  // res.cookie('refreshToken', session.refreshToken, {
-  //   httpOnly: true,
-  //   expires: new Date(Date.now() + ONE_DAY),
-  // });
-  // res.cookie('sessionId', session._id, {
-  //   httpOnly: true,
-  //   expires: new Date(Date.now() + ONE_DAY),
-  // });
-  setupAuthUserSession(res, session);
+export const loginAuthUserController = async (req, res) => {
+  const { email, password } = req.body;
+  const authUser = await getAuthUserByEmail(email);
+  if (!authUser) {
+    throw createHttpError(401, 'Unauthorized');
+  }
+
+  const isPasswordCorrect = await bcrypt.compare(password, authUser.password);
+  if (!isPasswordCorrect) {
+    throw createHttpError(401, 'Unauthorized');
+  }
+
+  const session = await getAuthUserSessionService(authUser._id);
+
+  setupAuthUserSessionCookies(res, session);
 
   res.json({
     status: 200,
     message: 'Successfully logged in an user!',
-    data: {
-      accessToken: session.accessToken,
-    },
+    data: { accessToken: session.accessToken },
   });
 };
 
@@ -81,36 +89,30 @@ export const logoutAuthUserController = async (req, res) => {
   res.status(204).send();
 };
 
-
-
 export const refreshAuthUserSessionController = async (req, res) => {
-  const reqc =req.cookies;
-  const resc = res.cookies;
-  console.log({reqc});
-  console.log({resc});
-  const session = await refreshAuthUsersSessionService({
-    sessionId: req.cookies.sessionId,
-    refreshToken: req.cookies.refreshToken,
-  });
-console.log({session});
-  setupAuthUserSession(res, session);
+  const { sessionId } = req.cookies;
+  // const { sessionId, refreshToken } = req.cookies;
+
+  const session = await getAuthUserSessionById(sessionId);
+  if (!session) {
+    throw createHttpError(401, 'Session not found');
+  }
+
+  const isSessionTokenExpired = await isRefreshTockenExpired(session);
+  if (isSessionTokenExpired) {
+    throw createHttpError(401, 'Session token expired');
+  }
+
+
+  const authUserSession = await refreshAuthUsersSessionService(session);
+  setupAuthUserSessionCookies(res, authUserSession);
 
   res.json({
     status: 200,
     message: 'Successfully refreshed a session!',
     data: {
-      accessToken: session.accessToken,
+      accessToken: authUserSession.accessToken,
     },
   });
-};
-const setupAuthUserSession = (res, session) => {
-  const expires = new Date(Date.now() + ONE_DAY);
-  res.cookie('sessionId', session._id, {
-    httpOnly: true,
-    expires,
-  });
-  res.cookie('refreshToken', session.refreshToken, {
-    httpOnly: true,
-    expires,
-  });
+
 };

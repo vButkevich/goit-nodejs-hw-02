@@ -11,8 +11,12 @@ import { parseSortParams } from '../utils/parseSortParams.js';
 import { parseFilterParams } from '../utils/parseFilterParams.js';
 
 export const getContactsController = async (req, res) => {
-  const req_query = req.query;
-  console.log({ req_query });
+  const userId = req.authUser._id;
+  // const req_query = req.query;
+  // console.log({ req_query });
+  // console.log('getContactsController:',{ req });
+  // console.log('getContactsController.get:', req );
+  // console.log({ req });
   const { page, perPage } = parsePaginationParams(req.query);
   const { sortBy, sortOrder } = parseSortParams(req.query);
   const filter = parseFilterParams(req.query);
@@ -23,6 +27,7 @@ export const getContactsController = async (req, res) => {
     sortBy,
     sortOrder,
     filter,
+    userId,
   });
 
   res.json({
@@ -34,9 +39,11 @@ export const getContactsController = async (req, res) => {
 };
 
 export const createContactController = async (req, res) => {
-  const contact = await createContactService(req.body);
+  const contactData = { ...req.body, userId: req.authUser._id };
+  const contact = await createContactService(contactData);
   const req_body = req.body;
   console.log({ req_body });
+  console.log({ contactData });
 
   res.status(201).json({
     status: 201,
@@ -46,18 +53,24 @@ export const createContactController = async (req, res) => {
 };
 
 export const upsertContactController = async (req, res, next) => {
+  console.log('upsertContactController:');
+  const { userId } = req.authUser._id;
   const req_params = req.params;
   console.log({ req_params });
+  const { id } = req.params;
+console.log({id});
+  // const contactData = { ...req.body, userId };
+  const contactData = { ...req.body, userId: req.authUser._id };
 
-  const { contactId } = req.params;
-  const result = await updateContactService(contactId, req.body, {
+  const result = await updateContactService(userId, id, contactData, {
     upsert: true,
   });
   console.log({ result });
 
   if (!result) {
-    next(createHttpError(404, 'Contact not found'));
-    return;
+    throw createHttpError(404, 'Contact not found');
+    // next(createHttpError(404, 'Contact not found'));
+    // return;
   }
 
   const status = result.isNew ? 201 : 200;
@@ -70,23 +83,25 @@ export const upsertContactController = async (req, res, next) => {
 };
 
 export const deleteContactByIdController = async (req, res, next) => {
+  const userId = req.authUser._id;
   const req_params = req.params;
   console.log({ req_params });
-  const { contactId } = req.params;
+  const { id } = req.params;
 
-  const contact = await deleteContactByIdService(contactId);
+  const contact = await deleteContactByIdService(userId, id);
 
   if (!contact) {
-    next(createHttpError(404, `Contact by id:[${contactId}] not exists`));
-    return;
+    throw createHttpError(404, `Contact by id:[${id}] not exists`);
+    // next(createHttpError(404, `Contact by id:[${id}] not exists`));
+    // return;
   }
 
   res.status(204).send();
 };
 
 export const getContactByIdController = async (req, res, next) => {
-  const { contactId } = req.params;
-  const contact = await getContactByIdService(contactId);
+  const { id } = req.params;
+  const contact = await getContactByIdService(id);
 
   if (!contact) {
     throw createHttpError(404, 'Contact not found');
@@ -95,22 +110,24 @@ export const getContactByIdController = async (req, res, next) => {
   res.json({
     status: 200,
     res_status: res.status,
-    message: `Successfully found contact by id:[${contactId}]`,
+    message: `Successfully found contact by id:[${id}]`,
     data: contact,
   });
 };
 
 export const patchContactController = async (req, res, next) => {
-  const { contactId } = req.params;
+  const userId = req.authUser._id;
+  const { id } = req.params;
   const body = req.body;
 
-  console.log({ contactId });
+  console.log({ id });
   console.log({ body });
-  const result = await updateContactService(contactId, body);
+  const result = await updateContactService(userId, id, body);
 
   if (!result) {
-    next(createHttpError(404, 'Contact not found'));
-    return;
+    throw createHttpError(404, 'Contact not found');
+    // next(createHttpError(404, 'Contact not found'));
+    // return;
   }
 
   res.json({

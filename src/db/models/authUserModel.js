@@ -16,4 +16,4 @@ authUserSchema.methods.toJSON = function () {
   return obj;
 };
 
-export const AuthUserCollection = model('authUsers', authUserSchema);
+export const AuthUserCollection = model('authUser', authUserSchema);
