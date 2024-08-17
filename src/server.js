@@ -38,7 +38,7 @@ export const setupServer = () => {
 
   app.get('/', (req, res) => {
     res.json({
-      message: 'goit-nodejs-hw-05:auth',
+      message: 'goit-nodejs-hw-06:post',
     });
   });
 
