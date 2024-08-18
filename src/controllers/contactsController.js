@@ -30,6 +30,10 @@ export const getContactsController = async (req, res) => {
     userId,
   });
 
+  if (contacts.length === 0) {
+    throw createHttpError(404, 'Contacts not found');
+  }
+
   res.json({
     status: 200,
     message: 'Successfully found contacts!',
@@ -104,6 +108,9 @@ export const getContactByIdController = async (req, res, next) => {
   const contact = await getContactByIdService(id);
 
   if (!contact) {
+    throw createHttpError(404, 'Contact not found');
+  }
+  if (contact.length === 0) {
     throw createHttpError(404, 'Contact not found');
   }
 
