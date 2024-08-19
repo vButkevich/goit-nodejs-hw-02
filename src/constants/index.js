@@ -2,6 +2,7 @@
 
 import path from 'node:path';
 
+export const SWAGGER_PATH = path.join(process.cwd(), 'docs', 'swagger.json');
 export const TEMPLATES_DIR = path.join(process.cwd(), 'src', 'templates');
 export const UPLOADS_DIR = path.join(process.cwd(), 'uploads');
 export const TEMP_DIR = path.join(process.cwd(), 'temp');
@@ -14,3 +15,5 @@ export const SORT_ORDER = {
   ASC: 'asc',
   DESC: 'desc',
 };
+
+

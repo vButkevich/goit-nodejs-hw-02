@@ -7,9 +7,14 @@ import { auth } from '../middlewares/auth.js';
 
 const router = Router();
 
+
+// router.use('/', (req, res) => {
+//   res.json({
+//     message: 'goit-nodejs-hw-07:1.google | 2.swagger',
+//   });
+// });
 router.use('/auth', authUserRouter);
 router.use('/contacts/all', contactsRouter);
 router.use('/contacts', auth, contactsRouter);
-
 
 export default router;

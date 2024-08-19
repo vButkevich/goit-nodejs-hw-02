@@ -9,6 +9,7 @@ import { notFoundHandler } from './middlewares/notFoundHandler.js';
 import cookieParser from 'cookie-parser';
 import router from './routers/router.js';
 import { UPLOADS_DIR } from './constants/index.js';
+import { swaggerDocs } from './middlewares/swaggerDocs.js';
 
 
 export const setupServer = () => {
@@ -38,11 +39,12 @@ export const setupServer = () => {
     }),
   );
   app.use(cookieParser());
-
+  app.use('/uploads', express.static(UPLOADS_DIR));
+  app.use('/api-docs', swaggerDocs());
 
   app.get('/', (req, res) => {
     res.json({
-      message: 'goit-nodejs-hw-06:post',
+      message: 'goit-nodejs-hw-07:google and swagger',
     });
   });
 
