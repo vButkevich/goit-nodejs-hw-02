@@ -5,7 +5,9 @@ import createHttpError from 'http-errors';
 import { getEncryptedPassword } from '../utils/password.js';
 import { AuthUserCollection } from '../db/models/authUserModel.js';
 
-import { SMTP, TEMPLATES_DIR } from '../constants/index.js';
+import { TEMPLATES_DIR } from '../constants/index.js';
+import { SMTP } from '../constants/smtp.js';
+
 import { sendEmail } from '../utils/sendMail.js';
 import { env } from '../utils/env.js';
 
@@ -70,7 +72,7 @@ const getEmailBodyHtml = async (data) => {
   const html = template({
     name: user.name,
     email: user.email,
-    link: `${env('APP_DOMAIN')}/reset-password?token=${resetToken}`,
+    link: `${env('APP_DOMAIN')}/reset-password`,//?token=${resetToken}`,
     token: resetToken,
   });
 

@@ -17,6 +17,10 @@ const contactSchema = new Schema(
       // match: '/.+\\@.+\\..+/',
       required: false,
     },
+    photo:{
+      type: String,
+      required: false,
+    },
     isFavourite: {
       type: Boolean,
       default: false,

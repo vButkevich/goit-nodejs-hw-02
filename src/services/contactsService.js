@@ -8,12 +8,16 @@ export const getContactsService = async ({
   sortOrder = SORT_ORDER.ASC,
   sortBy = '_id',
   filter = {},
-  userId,
+  userId = -1,
 }) => {
   const limit = perPage;
   const skip = (page - 1) * perPage;
 
-  const contactsQuery = ContactsCollection.find({userId});
+  let contactsQuery = ContactsCollection.find({userId});
+  if(userId === -1){
+    contactsQuery = ContactsCollection.find();
+  }
+
   // const contactsTotal = await ContactsCollection.find()
   //   .merge(contactsQuery)
   //   .countDocuments();
@@ -75,7 +79,7 @@ export const deleteContactByIdService = async (userId,id) => {
   return contact;
 };
 
-export const updateContactService = async (userId,id, contactData, options = {}) => {
+export const updateContactService = async (userId,id, data, options = {}) => {
   // console.log('updatecontactService');
   // console.log({ id });
   // console.log({ contactData });
@@ -83,7 +87,7 @@ export const updateContactService = async (userId,id, contactData, options = {})
 
   const rawResult = await ContactsCollection.findOneAndUpdate(
     { _id: id ,userId,},
-    contactData,
+    data,
     {
       new: true,
       includeResultMetadata: true,

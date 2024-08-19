@@ -9,6 +9,7 @@ const contactValidationObject = {
   }),
   phoneNumber:Joi.string().min(10).max(16),
   email: Joi.string().email().required(),
+  photo:Joi.string(),
   isFavourite: Joi.boolean(),
   contactType: Joi.string().valid('work', 'home', 'personal').required(),
 };
@@ -19,6 +20,7 @@ export const updateContactValidationSchema = Joi.object(
     name: Joi.string().min(3).max(32),
     phoneNumber:Joi.string().min(10).max(16),
     email: Joi.string().email(),
+    photo:Joi.string(),
     isFavourite: Joi.boolean(),
     contactType: Joi.string().valid('work', 'home', 'personal'),
   });

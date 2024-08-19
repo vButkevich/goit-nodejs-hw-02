@@ -9,9 +9,19 @@ import {
 import { parsePaginationParams } from '../utils/parsePaginationParams.js';
 import { parseSortParams } from '../utils/parseSortParams.js';
 import { parseFilterParams } from '../utils/parseFilterParams.js';
+import { saveFileToUploadDir } from '../utils/saveFileToUploadDir.js';
+import { env } from '../utils/env.js';
+import { saveFileToCloudinary } from '../utils/saveFileToCloudinary.js';
 
 export const getContactsController = async (req, res) => {
-  const userId = req.authUser._id;
+  // const userId = req.authUser._id;
+  let userId = -1;
+  try {
+    userId = req.authUser._id;
+  } catch (err) {
+    console.log(err);
+  }
+
   // const req_query = req.query;
   // console.log({ req_query });
   // console.log('getContactsController:',{ req });
@@ -106,8 +116,8 @@ export const deleteContactByIdController = async (req, res, next) => {
 export const getContactByIdController = async (req, res, next) => {
   const { id } = req.params;
   const userId = req.authUser._id;
-  const contact = await getContactByIdService(userId,id);
-  console.log('contact.length',contact.length);
+  const contact = await getContactByIdService(userId, id);
+  console.log('contact.length', contact.length);
   console.log({ contact });
 
   if (!contact) {
@@ -126,13 +136,37 @@ export const getContactByIdController = async (req, res, next) => {
 };
 
 export const patchContactController = async (req, res, next) => {
+  const authUser = req.authUser;
   const userId = req.authUser._id;
   const { id } = req.params;
   const body = req.body;
 
   console.log({ id });
   console.log({ body });
-  const result = await updateContactService(userId, id, body);
+  console.log({ authUser });
+
+
+  let photoUrl;
+  const photo = req.photo;
+  console.log({photo});
+  // if (photo) {
+  //   photoUrl = await saveFileToUploadDir(photo);
+  // }
+  if (photo) {
+    if (env('CLOUDINARY_ENABLE') === 'true'){//} || env('ENABLE_CLOUDINARY') === 'true') {
+      photoUrl = await saveFileToCloudinary(photo);
+    }
+    if (env('ENABLE_CLOUDINARY') === 'true') {
+      photoUrl = await saveFileToCloudinary(photo);
+    } else {
+      photoUrl = await saveFileToUploadDir(photo);
+    }
+  }
+  console.log({photoUrl});
+  const result = await updateContactService(userId, id, {
+    ...body,
+    photo: photoUrl,
+  });
 
   if (!result) {
     throw createHttpError(404, 'Contact not found');

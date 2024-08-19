@@ -1,4 +1,3 @@
-import bcrypt from 'bcrypt';
 import createHttpError from 'http-errors';
 
 import {
@@ -20,6 +19,7 @@ import {
   resetAuthUserPasswordService,
   sendResetAuthUserTokenEmailService,
 } from '../services/authUserResetService.js';
+import { comparePasswords } from '../utils/password.js';
 
 export const registerAuthUserController = async (req, res) => {
   const { email, name } = req.body;
@@ -65,7 +65,8 @@ export const loginAuthUserController = async (req, res) => {
     throw createHttpError(401, 'Unauthorized');
   }
 
-  const isPasswordCorrect = await bcrypt.compare(password, authUser.password);
+  // const isPasswordCorrect = await bcrypt.compare(password, authUser.password);
+  const isPasswordCorrect = await comparePasswords(password, authUser.password);
   if (!isPasswordCorrect) {
     throw createHttpError(401, 'Unauthorized');
   }
@@ -139,7 +140,7 @@ export const requestAuthUSerResetEmailController = async (req, res) => {
 
 export const resetAuthUserPasswordController = async (req, res) => {
   await resetAuthUserPasswordService(req.body);
-  
+
   res.json({
     message: 'Password was successfully reset!',
     status: 200,
