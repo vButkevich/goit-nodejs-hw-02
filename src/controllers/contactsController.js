@@ -104,8 +104,9 @@ export const deleteContactByIdController = async (req, res, next) => {
 };
 
 export const getContactByIdController = async (req, res, next) => {
+  const userId = req.authUser._id;
   const { id } = req.params;
-  const contact = await getContactByIdService(id);
+  const contact = await getContactByIdService(userId,id);
 
   if (!contact) {
     throw createHttpError(404, 'Contact not found');
