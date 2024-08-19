@@ -16,6 +16,11 @@ import {
   isRefreshTockenExpired,
 } from '../services/authUserSessionService.js';
 
+import {
+  resetAuthUserPasswordService,
+  sendResetAuthUserTokenEmailService,
+} from '../services/authUserResetService.js';
+
 export const registerAuthUserController = async (req, res) => {
   const { email, name } = req.body;
   const authUser = await getAuthUserByEmail(email);
@@ -31,7 +36,6 @@ export const registerAuthUserController = async (req, res) => {
     data: { name, email },
   });
 };
-
 
 export const getAuthController = async (req, res) => {
   res.send({
@@ -53,7 +57,6 @@ export const getAuthUsersController = async (req, res) => {
     sender: 'authUserController',
   });
 };
-
 
 export const loginAuthUserController = async (req, res) => {
   const { email, password } = req.body;
@@ -103,7 +106,6 @@ export const refreshAuthUserSessionController = async (req, res) => {
     throw createHttpError(401, 'Session token expired');
   }
 
-
   const authUserSession = await refreshAuthUsersSessionService(session);
   setupAuthUserSessionCookies(res, authUserSession);
 
@@ -114,5 +116,33 @@ export const refreshAuthUserSessionController = async (req, res) => {
       accessToken: authUserSession.accessToken,
     },
   });
+};
 
+// import { requestResetToken } from '../services/authUserService.js';
+
+export const requestAuthUSerResetEmailController = async (req, res) => {
+  // await requestResetToken(req.body.email);
+  const { email } = req.body;
+  const authUser = await getAuthUserByEmail(email);
+  if (!authUser) {
+    throw createHttpError(404, 'User not found');
+  }
+  console.log({ authUser });
+  await sendResetAuthUserTokenEmailService(authUser);
+
+  res.json({
+    message: 'Reset password email was successfully sent!',
+    status: 200,
+    data: {},
+  });
+};
+
+export const resetAuthUserPasswordController = async (req, res) => {
+  await resetAuthUserPasswordService(req.body);
+  
+  res.json({
+    message: 'Password was successfully reset!',
+    status: 200,
+    data: {},
+  });
 };

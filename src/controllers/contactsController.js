@@ -30,6 +30,10 @@ export const getContactsController = async (req, res) => {
     userId,
   });
 
+  if (contacts.length === 0) {
+    throw createHttpError(404, 'Contacts not found');
+  }
+
   res.json({
     status: 200,
     message: 'Successfully found contacts!',
@@ -58,7 +62,7 @@ export const upsertContactController = async (req, res, next) => {
   const req_params = req.params;
   console.log({ req_params });
   const { id } = req.params;
-console.log({id});
+  console.log({ id });
   // const contactData = { ...req.body, userId };
   const contactData = { ...req.body, userId: req.authUser._id };
 
@@ -101,9 +105,15 @@ export const deleteContactByIdController = async (req, res, next) => {
 
 export const getContactByIdController = async (req, res, next) => {
   const { id } = req.params;
-  const contact = await getContactByIdService(id);
+  const userId = req.authUser._id;
+  const contact = await getContactByIdService(userId,id);
+  console.log('contact.length',contact.length);
+  console.log({ contact });
 
   if (!contact) {
+    throw createHttpError(404, 'Contact not found');
+  }
+  if (contact.length === 0) {
     throw createHttpError(404, 'Contact not found');
   }
 

@@ -3,14 +3,18 @@ import { controllerWrapper } from '../controllers/controllerWrapper.js';
 import {
   loginAuthUserSchema,
   registerAuthUserSchema,
+  resetAuthUserPasswordSchema,
+  requestAuthUserResetEmailSchema,
 } from '../validation/authValidation.js';
 import {
-  registerAuthUserController,
+  getAuthController,
   getAuthUsersController,
   loginAuthUserController,
   logoutAuthUserController,
+  registerAuthUserController,
   refreshAuthUserSessionController,
-  getAuthController,
+  requestAuthUSerResetEmailController,
+  resetAuthUserPasswordController,
 } from '../controllers/authUserController.js';
 import { validateBody } from '../middlewares/validateBody.js';
 
@@ -39,4 +43,15 @@ router.post(
 
 router.post('/refresh', controllerWrapper(refreshAuthUserSessionController));
 
+router.post(
+  '/request-reset-email',
+  validateBody(requestAuthUserResetEmailSchema),
+  controllerWrapper(requestAuthUSerResetEmailController),
+);
+
+router.post(
+  '/reset-password',
+  validateBody(resetAuthUserPasswordSchema),
+  controllerWrapper(resetAuthUserPasswordController),
+);
 export default router;

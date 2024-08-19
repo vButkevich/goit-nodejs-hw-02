@@ -1,6 +1,7 @@
-import bcrypt from 'bcrypt';
+// import bcrypt from 'bcrypt';
 import { AuthUserCollection } from '../db/models/authUserModel.js';
 import { AuthUserSessionCollection } from '../db/models/authUserSessionModel.js';
+import { getEncryptedPassword } from '../utils/password.js';
 
 export const getAuthUsersService = async (payload) => {
   const authUsers = AuthUserCollection.find();
@@ -16,7 +17,9 @@ export const getAuthUserByEmail = (email) =>
   AuthUserCollection.findOne({ email });
 
 export const createAuthUserService = async (userData) => {
-  const encryptedPassword = await bcrypt.hash(userData.password, 10);
+  // const encryptedPassword = await bcrypt.hash(userData.password, 10);
+  const encryptedPassword = await getEncryptedPassword(userData.password);
+
   return await AuthUserCollection.create({
     ...userData,
     password: encryptedPassword,
