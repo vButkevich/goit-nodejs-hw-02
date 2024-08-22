@@ -17,7 +17,7 @@ import {
 
 import {
   resetAuthUserPasswordService,
-  sendResetAuthUserTokenEmailService,
+  sendAuthUserResetPasswordEmailService,
 } from '../services/authUserResetService.js';
 import { comparePasswords } from '../utils/password.js';
 
@@ -121,15 +121,15 @@ export const refreshAuthUserSessionController = async (req, res) => {
 
 // import { requestResetToken } from '../services/authUserService.js';
 
-export const requestAuthUSerResetEmailController = async (req, res) => {
+export const sendAuthUserResetPasswordEmailController = async (req, res) => {
   // await requestResetToken(req.body.email);
   const { email } = req.body;
   const authUser = await getAuthUserByEmail(email);
   if (!authUser) {
     throw createHttpError(404, 'User not found');
   }
-  console.log({ authUser });
-  await sendResetAuthUserTokenEmailService(authUser);
+
+  await sendAuthUserResetPasswordEmailService(authUser);
 
   res.json({
     message: 'Reset password email was successfully sent!',
@@ -139,7 +139,9 @@ export const requestAuthUSerResetEmailController = async (req, res) => {
 };
 
 export const resetAuthUserPasswordController = async (req, res) => {
-  await resetAuthUserPasswordService(req.body);
+  // await resetAuthUserPasswordService(req.body);
+  const { token, password } = req.body;
+  await resetAuthUserPasswordService(token, password);
 
   res.json({
     message: 'Password was successfully reset!',
