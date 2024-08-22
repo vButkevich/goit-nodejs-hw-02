@@ -20,7 +20,6 @@ import { validateBody } from '../middlewares/validateBody.js';
 
 const router = Router();
 
-router.get('/', controllerWrapper(getAuthController));
 router.get('/users', controllerWrapper(getAuthUsersController));
 
 router.post(
