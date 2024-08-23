@@ -10,7 +10,6 @@ import cookieParser from 'cookie-parser';
 import router from './routers/router.js';
 import { UPLOADS_DIR } from './constants/index.js';
 
-
 export const setupServer = () => {
   const PORT = Number(env('PORT', '3000'));
   const app = express();
@@ -39,10 +38,9 @@ export const setupServer = () => {
   );
   app.use(cookieParser());
 
-
   app.get('/', (req, res) => {
     res.json({
-      message: 'goit-nodejs-hw-06:post',
+      message: 'goit-nodejs-hw-06:emailBy-Brevo and save-img-to-cloudinary',
     });
   });
 
