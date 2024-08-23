@@ -69,11 +69,12 @@ const getRequestResetEmailBodyHtml = async (data) => {
   ).toString();
 
   const template = handlebars.compile(templateSourceFile);
+  const link = `${env('APP_DOMAIN')}/auth/reset-password`;
   const html = template({
     name: user.name,
     email: user.email,
-    link: `${env('APP_DOMAIN')}/reset-password`, //?token=${resetToken}`,
     token: resetToken,
+    link: link, //`${env('APP_DOMAIN')}/reset-password`, //?token=${resetToken}`,
   });
 
   const tempFile = path.join(TEMP_DIR, 'reset-password-email.html');
