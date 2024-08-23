@@ -13,14 +13,13 @@ import {
   logoutAuthUserController,
   registerAuthUserController,
   refreshAuthUserSessionController,
-  requestAuthUSerResetEmailController,
+  sendAuthUserResetPasswordEmailController,
   resetAuthUserPasswordController,
 } from '../controllers/authUserController.js';
 import { validateBody } from '../middlewares/validateBody.js';
 
 const router = Router();
 
-router.get('/', controllerWrapper(getAuthController));
 router.get('/users', controllerWrapper(getAuthUsersController));
 
 router.post(
@@ -46,11 +45,12 @@ router.post('/refresh', controllerWrapper(refreshAuthUserSessionController));
 router.post(
   '/request-reset-email',
   validateBody(requestAuthUserResetEmailSchema),
-  controllerWrapper(requestAuthUSerResetEmailController),
+  controllerWrapper(sendAuthUserResetPasswordEmailController),
 );
 
 router.post(
   '/reset-password',
+  // jsonParser,
   validateBody(resetAuthUserPasswordSchema),
   controllerWrapper(resetAuthUserPasswordController),
 );

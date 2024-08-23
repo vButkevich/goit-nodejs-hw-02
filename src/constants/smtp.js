@@ -1,7 +1,9 @@
+import { env } from '../utils/env.js';
+
 export const SMTP = {
-    SMTP_HOST: 'SMTP_HOST',
-    SMTP_PORT: 'SMTP_PORT',
-    SMTP_USER: 'SMTP_USER',
-    SMTP_PASSWORD: 'SMTP_PASSWORD',
-    SMTP_FROM: 'SMTP_FROM',
-  };
+  FROM: env('SMTP_FROM'),
+  HOST: env('SMTP_HOST'),
+  PORT: env('SMTP_PORT'),
+  USER: env('SMTP_USER'),
+  PASSWORD: env('SMTP_PASSWORD'),
+};
