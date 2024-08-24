@@ -9,6 +9,13 @@ export const isRefreshTockenExpired = (session) => {
   return new Date() > new Date(session.refreshTokenValidUntil);
 };
 
+
+export const getAuthUsersSessionsService = async () => {
+  const authUserSessions = await AuthUserSessionCollection.find();
+  return authUserSessions;
+};
+
+
 export const refreshAuthUsersSessionService = async (session) => {
   // await AuthUserSessionCollection.deleteOne({_id:session._id });
   await AuthUserSessionCollection.findByIdAndDelete(session._id);
@@ -58,3 +65,5 @@ export const setupAuthUserSessionCookies = (res, session) => {
     expires,
   });
 };
+
+

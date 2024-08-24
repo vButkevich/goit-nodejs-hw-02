@@ -15,12 +15,15 @@ import {
   refreshAuthUserSessionController,
   sendAuthUserResetPasswordEmailController,
   resetAuthUserPasswordController,
+  getAuthUsersSessionsController,
 } from '../controllers/authUserController.js';
 import { validateBody } from '../middlewares/validateBody.js';
 
 const router = Router();
 
+router.get('/', controllerWrapper(getAuthController));
 router.get('/users', controllerWrapper(getAuthUsersController));
+router.get('/sessions', controllerWrapper(getAuthUsersSessionsController));
 
 router.post(
   '/register',
