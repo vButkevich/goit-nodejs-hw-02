@@ -1,7 +1,6 @@
 import createHttpError from 'http-errors';
 
 import {
-  // getAuthUserById,
   getAuthUserByEmail,
   getAuthUsersService,
   createAuthUserService,
@@ -65,7 +64,6 @@ export const loginAuthUserController = async (req, res) => {
     throw createHttpError(401, 'Unauthorized');
   }
 
-  // const isPasswordCorrect = await bcrypt.compare(password, authUser.password);
   const isPasswordCorrect = await comparePasswords(password, authUser.password);
   if (!isPasswordCorrect) {
     throw createHttpError(401, 'Unauthorized');
@@ -95,7 +93,6 @@ export const logoutAuthUserController = async (req, res) => {
 
 export const refreshAuthUserSessionController = async (req, res) => {
   const { sessionId } = req.cookies;
-  // const { sessionId, refreshToken } = req.cookies;
 
   const session = await getAuthUserSessionById(sessionId);
   if (!session) {
@@ -119,10 +116,7 @@ export const refreshAuthUserSessionController = async (req, res) => {
   });
 };
 
-// import { requestResetToken } from '../services/authUserService.js';
-
 export const sendAuthUserResetPasswordEmailController = async (req, res) => {
-  // await requestResetToken(req.body.email);
   const { email } = req.body;
   const authUser = await getAuthUserByEmail(email);
   if (!authUser) {
@@ -139,7 +133,6 @@ export const sendAuthUserResetPasswordEmailController = async (req, res) => {
 };
 
 export const resetAuthUserPasswordController = async (req, res) => {
-  // await resetAuthUserPasswordService(req.body);
   const { token, password } = req.body;
   await resetAuthUserPasswordService(token, password);
 
