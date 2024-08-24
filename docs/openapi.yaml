@@ -1,31 +1,66 @@
+# openapi: 3.1.0
+# info:
+#   version: hw:7.2.0
+#   title: goit-nodejs
+#   license:
+#     name: Apache 2.0
+#     url: http://www.apache.org/licenses/LICENSE-2.0.html
+#   description:
+#     goit-nodejs-hw7.Google Auth & swagger
+# tags:
+#   # теги, що ви будете використовувати
+#   - name: contacts
+#     description: Operations about contacts.
+#   # - name: Google-Auth
+#   #   description: Google Auth operations.
+# servers:
+#   - url: http://localhost:3000
+#   # - url: https://example.com/api/v1
+#   - url: https://contacts-app-p90i.onrender.com
+#   # - url: #посилання на задеплоєний сайт
+# paths:
+#   # тут будуть посилання на ендпоінти
+#   /contacts:
+#     get:
+#       $ref: ../swagger/paths/contacts/get.yaml
+#   # /contacts/{id}:
+#   #   get:
+#   #     $ref: ../swagger/paths/contacts/{id}/get.yaml
+#   #   post:
+#   #     $ref: ../swagger/paths/students/post.yaml
+#   # /students/{id}:
+#   #   get:
+#   #     $ref: ../swagger/paths/students/{id}/get.yaml
+# components:
+#   securitySchemes:
+#     bearerAuth:
+#       type: http
+#       scheme: bearer
+
+
+
 openapi: 3.1.0
 info:
-  version: hw:7.2.0
-  title: goit-nodejs
+  version: 7.2.0
+  title: Contacts app
   license:
     name: Apache 2.0
     url: http://www.apache.org/licenses/LICENSE-2.0.html
   description:
-    goit-nodejs-hw7.Google Auth & swagger
+    This is a documentation of students app
 tags:
-  # теги, що ви будете використовувати
-  - name: Contacts
-    description: Operations about contacts.
-  - name: Google-Auth
-    description: Google Auth operations.
+  - name: Students
+    description: Operations about users.
+  - name: Auth
+    description: Auth operations.
 servers:
-  - url: http://localhost:3000
-  # - url: https://example.com/api/v1
+  # - url: http://localhost:3000
   - url: https://contacts-app-p90i.onrender.com
-  # - url: #посилання на задеплоєний сайт
 paths:
-  # тут будуть посилання на ендпоінти
-  /contacts:
+  /students:
     get:
-      $ref: ../swagger/paths/contacts/get.yaml
-  /contacts/{id}:
-    get:
-      $ref: ../swagger/paths/contacts/{id}/get.yaml
+      $ref: ../swagger/paths/students/get.yaml
+  # /students:
   #   post:
   #     $ref: ../swagger/paths/students/post.yaml
   # /students/{id}:
