@@ -36,11 +36,16 @@ router.post(
 
 router.post(
   '/logout',
-  // validateBody(loginAuthUserSchema),
   controllerWrapper(logoutAuthUserController),
 );
 
 router.post('/refresh', controllerWrapper(refreshAuthUserSessionController));
+
+router.post(
+  '/send-reset-email',
+  validateBody(requestAuthUserResetEmailSchema),
+  controllerWrapper(sendAuthUserResetPasswordEmailController),
+);
 
 router.post(
   '/request-reset-email',
@@ -49,9 +54,16 @@ router.post(
 );
 
 router.post(
-  '/reset-password',
-  // jsonParser,
+  '/reset-pwd',
   validateBody(resetAuthUserPasswordSchema),
   controllerWrapper(resetAuthUserPasswordController),
 );
+
+router.post(
+  '/reset-password',
+  validateBody(resetAuthUserPasswordSchema),
+  controllerWrapper(resetAuthUserPasswordController),
+);
+
+
 export default router;
