@@ -13,15 +13,10 @@ export const getContactsService = async ({
   const limit = perPage;
   const skip = (page - 1) * perPage;
 
-  let contactsQuery = ContactsCollection.find({userId});
-  if(userId === -1){
+  let contactsQuery = ContactsCollection.find({ userId });
+  if (userId === -1) {
     contactsQuery = ContactsCollection.find();
   }
-
-  // const contactsTotal = await ContactsCollection.find()
-  //   .merge(contactsQuery)
-  //   .countDocuments();
-  // console.log({ contactsTotal });
 
   if (filter.name) {
     contactsQuery.where('name').regex(new RegExp(filter.name, 'i'));
@@ -48,8 +43,7 @@ export const getContactsService = async ({
       .exec(),
   ]);
   const paginationData = calculatePaginationData(contactsCount, perPage, page);
-  // const paginationData = calculatePaginationData(contactsTotal, perPage, page);
-
+  
   return {
     // filter,
     // count: contactsCount,//contacts.length,
@@ -59,34 +53,33 @@ export const getContactsService = async ({
   };
 };
 
-export const getContactByIdService = async (userId,id) => {
+export const getContactByIdService = async (userId, id) => {
   // const contact = await ContactsCollection.findById(studentId);
-  const contact = await ContactsCollection.find({_id:id,userId,});
+  const contact = await ContactsCollection.findOne({ _id: id, userId });
   return contact;
 };
 
 export const createContactService = async (contactData) => {
+  console.log('>>createContactService:--------------------');
   console.log({ contactData });
   const contact = await ContactsCollection.create(contactData);
   return contact;
 };
 
-export const deleteContactByIdService = async (userId,id) => {
+export const deleteContactByIdService = async (userId, id) => {
   const contact = await ContactsCollection.findOneAndDelete({
-    _id: id,userId,
+    _id: id,
+    userId,
   });
 
   return contact;
 };
 
-export const updateContactService = async (userId,id, data, options = {}) => {
-  // console.log('updatecontactService');
-  // console.log({ id });
-  // console.log({ contactData });
-  // console.log({ options });
+export const updateContactService = async (userId, id, data, options = {}) => {
+  console.log('>>updatecontactService');
 
   const rawResult = await ContactsCollection.findOneAndUpdate(
-    { _id: id ,userId,},
+    { _id: id, userId },
     data,
     {
       new: true,

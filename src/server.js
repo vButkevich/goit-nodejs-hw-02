@@ -11,7 +11,6 @@ import router from './routers/router.js';
 import { UPLOADS_DIR } from './constants/index.js';
 import { swaggerDocs } from './middlewares/swaggerDocs.js';
 
-
 export const setupServer = () => {
   const PORT = Number(env('PORT', '3000'));
   const app = express();
