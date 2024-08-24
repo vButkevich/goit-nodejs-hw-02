@@ -18,11 +18,6 @@ export const getContactsService = async ({
     contactsQuery = ContactsCollection.find();
   }
 
-  // const contactsTotal = await ContactsCollection.find()
-  //   .merge(contactsQuery)
-  //   .countDocuments();
-  // console.log({ contactsTotal });
-
   if (filter.name) {
     contactsQuery.where('name').regex(new RegExp(filter.name, 'i'));
   }
@@ -48,8 +43,7 @@ export const getContactsService = async ({
       .exec(),
   ]);
   const paginationData = calculatePaginationData(contactsCount, perPage, page);
-  // const paginationData = calculatePaginationData(contactsTotal, perPage, page);
-
+  
   return {
     // filter,
     // count: contactsCount,//contacts.length,
@@ -83,9 +77,6 @@ export const deleteContactByIdService = async (userId, id) => {
 
 export const updateContactService = async (userId, id, data, options = {}) => {
   console.log('>>updatecontactService');
-  // console.log({ id });
-  // console.log({ contactData });
-  // console.log({ options });
 
   const rawResult = await ContactsCollection.findOneAndUpdate(
     { _id: id, userId },
