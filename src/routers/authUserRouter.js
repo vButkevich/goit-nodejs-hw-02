@@ -11,6 +11,8 @@ import {
   logoutAuthUserController,
   registerAuthUserController,
   refreshAuthUserSessionController,
+  // sendAuthUserResetPasswordEmailController,
+  // resetAuthUserPasswordController,
 } from '../controllers/authUserController.js';
 import { validateBody } from '../middlewares/validateBody.js';
 
@@ -33,5 +35,29 @@ router.post(
 router.post('/logout', controllerWrapper(logoutAuthUserController));
 
 router.post('/refresh', controllerWrapper(refreshAuthUserSessionController));
+
+// router.post(
+//   '/send-reset-email',
+//   validateBody(requestAuthUserResetEmailSchema),
+//   controllerWrapper(sendAuthUserResetPasswordEmailController),
+// );
+
+// router.post(
+//   '/request-reset-email',
+//   validateBody(requestAuthUserResetEmailSchema),
+//   controllerWrapper(sendAuthUserResetPasswordEmailController),
+// );
+
+// router.post(
+//   '/reset-pwd',
+//   validateBody(resetAuthUserPasswordSchema),
+//   controllerWrapper(resetAuthUserPasswordController),
+// );
+
+// router.post(
+//   '/reset-password',
+//   validateBody(resetAuthUserPasswordSchema),
+//   controllerWrapper(resetAuthUserPasswordController),
+// );
 
 export default router;
