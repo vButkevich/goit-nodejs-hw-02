@@ -10,12 +10,14 @@ import cookieParser from 'cookie-parser';
 import router from './routers/router.js';
 import { UPLOADS_DIR } from './constants/index.js';
 import { swaggerDocs } from './middlewares/swaggerDocs.js';
+import { log } from './utils/log.js';
+// import { swaggerDocs } from './middlewares/swaggerDocs.js';
 
 export const setupServer = () => {
   const PORT = Number(env('PORT', '3000'));
   const app = express();
 
-  app.use('/uploads', express.static(UPLOADS_DIR));
+  // app.use('/uploads', express.static(UPLOADS_DIR));
 
   app.use((req, res, next) => {
     console.log('-^-'.repeat(33));
@@ -39,7 +41,7 @@ export const setupServer = () => {
   );
   app.use(cookieParser());
   app.use('/uploads', express.static(UPLOADS_DIR));
-  app.use('/api-docs', swaggerDocs());
+  // app.use('/api-docs', swaggerDocs());
 
   app.get('/', (req, res) => {
     res.json({
@@ -55,6 +57,6 @@ export const setupServer = () => {
   app.use(errorHandler);
 
   app.listen(PORT, () => {
-    console.log(`Server is running on port:[${PORT}]`);
+    log(`Server is running on port:[${PORT}]`);
   });
 };

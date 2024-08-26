@@ -2,7 +2,7 @@
 import jwt from 'jsonwebtoken';
 import createHttpError from 'http-errors';
 
-import { getEncryptedPassword, getRandomPassword } from '../utils/password.js';
+import { getEncryptedPassword } from '../utils/password.js';
 import { AuthUserCollection } from '../db/models/authUserModel.js';
 
 import { TEMP_DIR, TEMPLATES_DIR } from '../constants/index.js';

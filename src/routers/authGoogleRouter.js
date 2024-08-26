@@ -5,13 +5,9 @@ import {
   getGoogleOAuthUrlController,
   loginWithGoogleController,
 } from '../controllers/authGoogleController.js';
-import { controllerWrapper } from '../controllers/controllerWrapper.js';
-// import { loginUserSchema } from '../validation/auth.js';
-// import { loginUserController } from '../controllers/auth.js';
 import { loginWithGoogleOAuthSchema } from '../validation/authValidation.js';
+import { controllerWrapper } from '../controllers/controllerWrapper.js';
 import { validateBody } from '../middlewares/validateBody.js';
-
-/* Інший код файлу */
 
 const router = Router();
 

@@ -4,11 +4,21 @@ import createHttpError from 'http-errors';
 import swaggerUI from 'swagger-ui-express';
 import fs from 'node:fs';
 
-import { SWAGGER_PATH } from '../constants/index.js';
+import { SWAGGER } from '../constants/swagger.js';
+import { log } from '../utils/log.js';
 
 export const swaggerDocs = () => {
+  log('swaggerDocs:-------------->->');
+  log(SWAGGER.JSON);
+  
   try {
-    const swaggerDoc = JSON.parse(fs.readFileSync(SWAGGER_PATH).toString());
+    const swagger_json =fs.readFileSync(SWAGGER.JSON).toString();
+    const swaggerDoc = JSON.parse(swagger_json);
+    log({swagger_json});
+    log({swaggerDoc});
+    log(swaggerDoc);
+
+
     return [...swaggerUI.serve, swaggerUI.setup(swaggerDoc)];
   } catch (err) {
     console.log({err});

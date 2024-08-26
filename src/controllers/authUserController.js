@@ -9,6 +9,7 @@ import {
 import {
   getAuthUserSessionById,
   getAuthUserSessionService,
+  getAuthUsersSessionsService,
   refreshAuthUsersSessionService,
   setupAuthUserSessionCookies,
   isRefreshTockenExpired,
@@ -19,6 +20,38 @@ import {
 //   sendAuthUserResetPasswordEmailService,
 // } from '../services/authUserResetService.js';
 import { comparePasswords } from '../utils/password.js';
+
+export const getAuthController = async (req, res) => {
+  res.send({
+    sender: 'authUserController',
+    methods: {
+      login: '/auth/login',
+      logout: '/auth/logout',
+      refresh: '/auth\refresh',
+      register: '/auth\register',
+      request: '/auth/request-reset-email',
+      reset: '/auth/reset-password',
+    },
+    datetimestamp: new Date(),
+  });
+};
+
+export const getAuthUsersController = async (req, res) => {
+  const authUsers = await getAuthUsersService(req.query);
+  res.send({
+    datetimestamp: new Date(),
+    count: authUsers.length,
+    data: authUsers,
+  });
+};
+export const getAuthUsersSessionsController = async (req, res) => {
+  const authUsersSessions = await getAuthUsersSessionsService();
+  res.send({
+    datetimestamp: new Date(),
+    count: authUsersSessions.length,
+    data: authUsersSessions,
+  });
+};
 
 export const registerAuthUserController = async (req, res) => {
   const { email, name } = req.body;
@@ -33,27 +66,6 @@ export const registerAuthUserController = async (req, res) => {
     status: 201,
     message: 'Successfully registered a user!',
     data: { name, email },
-  });
-};
-
-export const getAuthController = async (req, res) => {
-  res.send({
-    body: req.body,
-    data: req.data,
-    params: req.params,
-    query: req.query,
-    sender: 'authUserController',
-  });
-};
-export const getAuthUsersController = async (req, res) => {
-  const authUsers = await getAuthUsersService(req.query);
-  res.send({
-    authUsers,
-    body: req.body,
-    data: req.data,
-    params: req.params,
-    query: req.query,
-    sender: 'authUserController',
   });
 };
 
@@ -122,8 +134,6 @@ export const refreshAuthUserSessionController = async (req, res) => {
 //   if (!authUser) {
 //     throw createHttpError(404, 'User not found');
 //   }
-
-//   await sendAuthUserResetPasswordEmailService(authUser);
 
 //   res.json({
 //     message: 'Reset password email was successfully sent!',

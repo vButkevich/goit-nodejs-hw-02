@@ -13,12 +13,15 @@ import {
   refreshAuthUserSessionController,
   // sendAuthUserResetPasswordEmailController,
   // resetAuthUserPasswordController,
+  getAuthUsersSessionsController,
 } from '../controllers/authUserController.js';
 import { validateBody } from '../middlewares/validateBody.js';
 
 const router = Router();
 
+router.get('/', controllerWrapper(getAuthController));
 router.get('/users', controllerWrapper(getAuthUsersController));
+router.get('/sessions', controllerWrapper(getAuthUsersSessionsController));
 
 router.post(
   '/register',
@@ -53,7 +56,6 @@ router.post('/refresh', controllerWrapper(refreshAuthUserSessionController));
 //   validateBody(resetAuthUserPasswordSchema),
 //   controllerWrapper(resetAuthUserPasswordController),
 // );
-
 // router.post(
 //   '/reset-password',
 //   validateBody(resetAuthUserPasswordSchema),

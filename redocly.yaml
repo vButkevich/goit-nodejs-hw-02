@@ -10,7 +10,7 @@ rules:
   no-unused-components: error
 theme:
   openapi:
-    htmlTemplate: ./docs/index.html
+    htmlTemplate: docs/index.html
     theme:
       colors:
         primary:
@@ -20,3 +20,4 @@ theme:
         - lang: curl
         - lang: Node.js
         - lang: JavaScript
+        - lang: C#
