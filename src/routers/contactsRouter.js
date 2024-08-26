@@ -20,6 +20,7 @@ const router = Router();
 
 router.post(
   '/',
+  upload.single('photo'),
   validateBody(createContactValidationSchema),
   controllerWrapper(createContactController),
 );
@@ -53,7 +54,7 @@ router.get(
   '/:id',
   validateId,
   // upload.single('photo'),
-controllerWrapper(getContactByIdController)
+  controllerWrapper(getContactByIdController),
 );
 router.get('/', controllerWrapper(getContactsController));
 router.get('/all', controllerWrapper(getContactsController));

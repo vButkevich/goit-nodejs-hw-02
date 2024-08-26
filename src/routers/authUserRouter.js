@@ -3,8 +3,6 @@ import { controllerWrapper } from '../controllers/controllerWrapper.js';
 import {
   loginAuthUserSchema,
   registerAuthUserSchema,
-  resetAuthUserPasswordSchema,
-  requestAuthUserResetEmailSchema,
 } from '../validation/authValidation.js';
 import {
   getAuthController,
@@ -13,8 +11,6 @@ import {
   logoutAuthUserController,
   registerAuthUserController,
   refreshAuthUserSessionController,
-  sendAuthUserResetPasswordEmailController,
-  resetAuthUserPasswordController,
 } from '../controllers/authUserController.js';
 import { validateBody } from '../middlewares/validateBody.js';
 
@@ -34,24 +30,8 @@ router.post(
   controllerWrapper(loginAuthUserController),
 );
 
-router.post(
-  '/logout',
-  // validateBody(loginAuthUserSchema),
-  controllerWrapper(logoutAuthUserController),
-);
+router.post('/logout', controllerWrapper(logoutAuthUserController));
 
 router.post('/refresh', controllerWrapper(refreshAuthUserSessionController));
 
-router.post(
-  '/request-reset-email',
-  validateBody(requestAuthUserResetEmailSchema),
-  controllerWrapper(sendAuthUserResetPasswordEmailController),
-);
-
-router.post(
-  '/reset-password',
-  // jsonParser,
-  validateBody(resetAuthUserPasswordSchema),
-  controllerWrapper(resetAuthUserPasswordController),
-);
 export default router;

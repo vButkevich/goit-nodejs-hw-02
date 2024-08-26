@@ -17,9 +17,10 @@ const contactSchema = new Schema(
       // match: '/.+\\@.+\\..+/',
       required: false,
     },
-    photo:{
+    photo: {
       type: String,
       required: false,
+      default: null,
     },
     isFavourite: {
       type: Boolean,
@@ -31,10 +32,10 @@ const contactSchema = new Schema(
       enum: ['work', 'home', 'personal'],
       default: 'personal',
     },
-    userId:{
+    userId: {
       type: Schema.Types.ObjectId,
       required: true,
-    }
+    },
   },
   {
     timestamps: true,
