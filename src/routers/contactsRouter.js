@@ -1,4 +1,4 @@
-import { Router } from 'express';
+import { Router, json } from 'express';
 import {
   getContactsController,
   getContactByIdController,
@@ -18,9 +18,10 @@ import {
 import { upload } from '../middlewares/multer.js';
 
 const router = Router();
-
+const jsonParser = json();
 router.post(
   '/',
+  jsonParser,
   upload.single('photo'),
   validateBody(createContactValidationSchema),
   defineContactDataObject,

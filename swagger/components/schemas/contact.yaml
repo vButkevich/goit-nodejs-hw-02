@@ -40,5 +40,5 @@ properties:
   photo:
     description: "Link to student's photo"
     type: string
-    example: https://res.cloudinary.com/uqwgdu/image/upload/image.png
-
+    # example: https://res.cloudinary.com/uqwgdu/image/upload/image.png
+    example: https://console.cloudinary.com/pm/c-270269dc58db33f68f4b2d60aa96fc/media-explorer?assetId=329002bf7ee220ce5147a8e18b26c2bd
