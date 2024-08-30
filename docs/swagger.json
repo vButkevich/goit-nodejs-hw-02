@@ -33,9 +33,7 @@
   "paths": {
     "/contacts": {
       "get": {
-        "tags": [
-          "Contacts"
-        ],
+        "tags": ["Contacts"],
         "summary": "Get list of contacts",
         "operationId": "getContacts",
         "description": "Get list of contacts with this endpoint",
@@ -75,10 +73,7 @@
             "name": "sortOrder",
             "schema": {
               "type": "string",
-              "enum": [
-                "asc",
-                "desc"
-              ],
+              "enum": ["asc", "desc"],
               "example": "asc"
             }
           }
@@ -90,11 +85,7 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "required": [
-                    "status",
-                    "message",
-                    "data"
-                  ],
+                  "required": ["status", "message", "data"],
                   "properties": {
                     "status": {
                       "type": "integer",
@@ -159,9 +150,7 @@
         }
       },
       "post": {
-        "tags": [
-          "Contacts"
-        ],
+        "tags": ["Contacts"],
         "summary": "Create contact",
         "operationId": "createContact",
         "description": "Create a new contact with payload",
@@ -175,11 +164,7 @@
             "multipart/form-data": {
               "schema": {
                 "type": "object",
-                "required": [
-                  "name",
-                  "email",
-                  "phoneNumber"
-                ],
+                "required": ["name", "email", "phoneNumber"],
                 "properties": {
                   "name": {
                     "description": "Contact's first name",
@@ -214,11 +199,7 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "required": [
-                    "status",
-                    "message",
-                    "data"
-                  ],
+                  "required": ["status", "message", "data"],
                   "properties": {
                     "status": {
                       "type": "integer",
@@ -245,9 +226,7 @@
     },
     "/contacts/{id}": {
       "get": {
-        "tags": [
-          "Contacts"
-        ],
+        "tags": ["Contacts"],
         "summary": "Get contact by id",
         "operationId": "getContact",
         "description": "Get contact by id from the list",
@@ -274,11 +253,7 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "required": [
-                    "status",
-                    "message",
-                    "data"
-                  ],
+                  "required": ["status", "message", "data"],
                   "properties": {
                     "status": {
                       "type": "integer",
@@ -303,9 +278,7 @@
         }
       },
       "patch": {
-        "tags": [
-          "Contacts"
-        ],
+        "tags": ["Contacts"],
         "summary": "Update contact details",
         "operationId": "updateContact",
         "description": "Updates the details of a specific contact. If a photo is provided, it will be updated as well.\n",
@@ -400,9 +373,7 @@
         }
       },
       "delete": {
-        "tags": [
-          "Contacts"
-        ],
+        "tags": ["Contacts"],
         "summary": "Delete a contact",
         "operationId": "deleteContact",
         "description": "Deletes a specific contact from the database.\n",
@@ -489,9 +460,7 @@
         }
       },
       "put": {
-        "tags": [
-          "Contacts"
-        ],
+        "tags": ["Contacts"],
         "summary": "Update or create a contact by ID",
         "operationId": "upsertContact",
         "description": "Update an existing contact or create a new one with the provided ID.",
@@ -589,9 +558,7 @@
     },
     "/auth/login": {
       "post": {
-        "tags": [
-          "Auth"
-        ],
+        "tags": ["Auth"],
         "summary": "Login user",
         "operationId": "loginUser",
         "description": "Logs in a user and returns an access token. Refresh token is set in cookies.\n",
@@ -634,9 +601,7 @@
     },
     "/auth/logout": {
       "post": {
-        "tags": [
-          "Auth"
-        ],
+        "tags": ["Auth"],
         "summary": "Logout user",
         "operationId": "logoutUser",
         "description": "Logs out a user by clearing the session and refresh token from cookies.\n",
@@ -657,9 +622,7 @@
     },
     "/auth/refresh": {
       "post": {
-        "tags": [
-          "Auth"
-        ],
+        "tags": ["Auth"],
         "summary": "Refresh user session",
         "operationId": "refreshUserSession",
         "description": "Refreshes the user session and returns a new access token. Refresh token must be provided in cookies.\n",
@@ -697,9 +660,7 @@
     },
     "/auth/query-reset-email": {
       "post": {
-        "tags": [
-          "Auth"
-        ],
+        "tags": ["Auth"],
         "summary": "Request password reset email",
         "operationId": "requestResetEmail",
         "description": "Sends an email to the user with a link to reset their password.\n",
@@ -754,9 +715,7 @@
     },
     "/auth/reset-password": {
       "post": {
-        "tags": [
-          "Auth"
-        ],
+        "tags": ["Auth"],
         "summary": "Reset user password",
         "operationId": "resetPassword",
         "description": "Resets the password for the user using a reset token.\n",
@@ -815,9 +774,7 @@
     },
     "/auth/google/get-oauth-url": {
       "get": {
-        "tags": [
-          "Auth"
-        ],
+        "tags": ["Auth"],
         "summary": "Get OAuth URL",
         "operationId": "getOAuthUrl",
         "description": "Returns the URL to initiate Google OAuth flow.\n",
@@ -863,9 +820,7 @@
     },
     "/auth/google/confirm-oauth": {
       "post": {
-        "tags": [
-          "Auth"
-        ],
+        "tags": ["Auth"],
         "summary": "Google login",
         "operationId": "googleLogin",
         "description": "Logs in a user using Google OAuth token. Returns an access token.\n",
@@ -885,9 +840,7 @@
                     "example": "google_code_here"
                   }
                 },
-                "required": [
-                  "code"
-                ]
+                "required": ["code"]
               }
             }
           }
@@ -938,11 +891,7 @@
     "schemas": {
       "contact": {
         "type": "object",
-        "required": [
-          "name",
-          "phoneNumber",
-          "contactType"
-        ],
+        "required": ["name", "phoneNumber", "contactType"],
         "properties": {
           "_id": {
             "description": "Contact's id",
@@ -972,11 +921,7 @@
           "contactType": {
             "description": "Type of contact",
             "type": "string",
-            "enum": [
-              "work",
-              "home",
-              "personal"
-            ],
+            "enum": ["work", "home", "personal"],
             "example": "personal"
           },
           "userId": {
@@ -987,7 +932,7 @@
           "photo": {
             "description": "Link to contact's photo",
             "type": "string",
-            "example": "https://res.cloudinary.com/uqwgdu/image/upload/contact_photo.png"
+            "example": "https://res.cloudinary.com/dqjvrm1jk/image/upload/v1724564742/wqj3q64cx0mrd7sv0d5x.png"
           },
           "createdAt": {
             "description": "Timestamp when the contact was created",
@@ -1011,11 +956,7 @@
           "application/json": {
             "schema": {
               "type": "object",
-              "required": [
-                "status",
-                "message",
-                "data"
-              ],
+              "required": ["status", "message", "data"],
               "properties": {
                 "status": {
                   "type": "integer",
@@ -1027,9 +968,7 @@
                 },
                 "data": {
                   "type": "object",
-                  "required": [
-                    "message"
-                  ],
+                  "required": ["message"],
                   "properties": {
                     "message": {
                       "type": "string",

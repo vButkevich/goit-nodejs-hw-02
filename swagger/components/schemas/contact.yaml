@@ -36,7 +36,7 @@ properties:
   photo:
     description: "Link to contact's photo"
     type: string
-    example: https://res.cloudinary.com/uqwgdu/image/upload/contact_photo.png
+    example: https://res.cloudinary.com/dqjvrm1jk/image/upload/v1724564742/wqj3q64cx0mrd7sv0d5x.png
   createdAt:
     description: 'Timestamp when the contact was created'
     type: string
