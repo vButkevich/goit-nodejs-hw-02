@@ -82,7 +82,6 @@ export const loginAuthUserController = async (req, res) => {
   }
 
   const session = await getAuthUserSessionService(authUser._id);
-
   setupAuthUserSessionCookies(res, session);
 
   res.json({

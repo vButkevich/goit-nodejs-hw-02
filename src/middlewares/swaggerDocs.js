@@ -12,7 +12,9 @@ export const swaggerDocs = () => {
   debuglog(SWAGGER.JSON);
 
   try {
-    const swagger_json = fs.readFileSync(SWAGGER.JSON).toString();
+    const swagger_json = fs
+      .readFileSync(SWAGGER.JSON, { encoding: 'utf-8' })
+      .toString();
     const swaggerDoc = JSON.parse(swagger_json);
     debuglog({ swagger_json });
     debuglog({ swaggerDoc });

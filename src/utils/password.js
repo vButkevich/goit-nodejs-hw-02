@@ -2,8 +2,10 @@ import bcrypt from 'bcrypt';
 import { randomBytes } from 'crypto';
 
 export const getRandomPassword = async () => {
-  const randomPassword = await bcrypt.hash(randomBytes(10), 10);
-  return randomPassword;
+  // const randomPassword = await bcrypt.hash(randomBytes(10), 10);
+  const password = randomBytes(10).toString('base64');
+  console.log({ password });
+  return await getEncryptedPassword(password);
 };
 
 export const getEncryptedPassword = async (password) => {

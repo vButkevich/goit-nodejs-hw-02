@@ -1,44 +1,49 @@
-# swagger/components/schemas/student.yaml
-
 type: object
 required:
-  - _id
   - name
-  - age
-  - gender
-  - avgMark
-  - onDuty
+  - phoneNumber
+  - contactType
 properties:
   _id:
-    description: "Student's id"
+    description: "Contact's id"
     type: string
     example: 65e4decdd286b30065d54af9
   name:
-    description: "Student's name"
+    description: "Contact's name"
     type: string
     example: 'John Doe'
-  age:
-    description: "Student's age"
-    type: number
-    example: 12
-  gender:
-    description: "Student's age"
+  phoneNumber:
+    description: "Contact's phone number"
     type: string
-    enum: ['male', 'female', 'other']
-  avgMark:
-    description: "Student's average mark. Should be between 1 and 12"
-    type: number
-    example: 9.7
-  onDuty:
-    description: 'Whether is student on duty'
+    example: '+1234567890'
+  email:
+    description: "Contact's email"
+    type: string
+    example: 'john.doe@example.com'
+  isFavourite:
+    description: "Is the contact marked as favourite"
     type: boolean
     example: false
-  parentId:
-    description: "Student's parent id"
+  contactType:
+    description: "Type of contact"
+    type: string
+    enum: ['work', 'home', 'personal']
+    example: 'personal'
+  userId:
+    description: "User's id who owns this contact"
     type: string
     example: 65e4decdd286b30065d54af9
   photo:
-    description: "Link to student's photo"
+    description: "Link to contact's photo"
     type: string
-    # example: https://res.cloudinary.com/uqwgdu/image/upload/image.png
-    example: https://console.cloudinary.com/pm/c-270269dc58db33f68f4b2d60aa96fc/media-explorer?assetId=329002bf7ee220ce5147a8e18b26c2bd
+    example: https://res.cloudinary.com/uqwgdu/image/upload/contact_photo.png
+  createdAt:
+    description: "Timestamp when the contact was created"
+    type: string
+    format: date-time
+    example: '2024-08-29T12:34:56.789Z'
+  updatedAt:
+    description: "Timestamp when the contact was last updated"
+    type: string
+    format: date-time
+    example: '2024-08-29T12:34:56.789Z'

@@ -1,19 +1,11 @@
-// src/utils/googleOAuth2.js
-
-import path from 'node:path';
-import { readFile } from 'fs/promises';
 import { OAuth2Client } from 'google-auth-library';
 import { GOOGLE } from '../constants/google.js';
 
-// import createHttpError from 'http-errors';
-
-const PATH_JSON = path.join(process.cwd(), 'google-oauth.json');
-const oauthConfig = JSON.parse(await readFile(PATH_JSON));
 
 const googleOAuthClient = new OAuth2Client({
   clientId: GOOGLE.AUTH_CLIENT_ID,
   clientSecret: GOOGLE.AUTH_CLIENT_SECRET,
-  redirectUri: oauthConfig.web.redirect_uris[0],
+  redirectUri: GOOGLE.AUTH_JSON.web.redirect_uris[0],
 });
 
 export const generateAuthUrl = () =>
@@ -32,6 +24,7 @@ export const validateCode = async (code) => {
   const token = await googleOAuthClient.verifyIdToken({
     idToken: response.tokens.id_token,
   });
+  console.log({ token });  
   return token;
 };
 

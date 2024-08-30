@@ -1,8 +1,10 @@
+#/swagger/paths/contacts/get.yaml
+
 tags:
   - Contacts
 summary: Get list of contacts
 operationId: getContacts
-description: 'Get list of Contacts with this endpoint'
+description: 'Get list of contacts with this endpoint'
 security:
   - bearerAuth: []
 parameters:
@@ -20,34 +22,14 @@ parameters:
     name: sortBy
     schema:
       type: string
-      example: 'age'
-    description: "All contacts's fields can be mentioned. Default value - _id"
+      example: 'lastName'
+    description: "All contact's fields can be mentioned. Default value - _id"
   - in: query
     name: sortOrder
     schema:
       type: string
       enum: ['asc', 'desc']
       example: 'asc'
-  - in: query
-    name: minAvgMark
-    schema:
-      type: number
-      example: 4
-  - in: query
-    name: maxAvgMark
-    schema:
-      type: number
-      example: 10
-  - in: query
-    name: minAge
-    schema:
-      type: number
-      example: 10
-  - in: query
-    name: maxAge
-    schema:
-      type: number
-      example: 16
 responses:
   '200':
     description: Successfully found contacts!
@@ -80,25 +62,24 @@ responses:
                 data:
                   type: array
                   items:
-                    # $ref: '../../components/schemas/student.yaml'
-                    $ref: ..\..\components\schemas\student.yaml
+                    $ref: '../../components/schemas/contact.yaml'
                 page:
                   type: number
-                  example: 2
+                  example: 1
                 perPage:
                   type: number
-                  example: 4
+                  example: 10
                 totalItems:
                   type: number
-                  example: 4
+                  example: 100
                 totalPages:
                   type: number
-                  example: 4
+                  example: 10
                 hasNextPage:
                   type: boolean
-                  example: false
+                  example: true
                 hasPreviousPage:
                   type: boolean
-                  example: true
+                  example: false
   '401':
     $ref: '../../components/responses/401.yaml'
