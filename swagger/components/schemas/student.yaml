@@ -12,7 +12,7 @@ properties:
   _id:
     description: "Student's id"
     type: string
-    example: 65e4decdd286b30065d54af9
+    example: 66cac506c0c58cc75510c10e
   name:
     description: "Student's name"
     type: string
@@ -36,9 +36,8 @@ properties:
   parentId:
     description: "Student's parent id"
     type: string
-    example: 65e4decdd286b30065d54af9
+    example: 66cac506c0c58cc75510c10e
   photo:
     description: "Link to student's photo"
     type: string
-    example: https://res.cloudinary.com/uqwgdu/image/upload/image.png
-
+    example: https://res.cloudinary.com/dqjvrm1jk/image/upload/v1724564742/wqj3q64cx0mrd7sv0d5x.png

@@ -41,7 +41,7 @@ paths:
   /auth/refresh:
     post:
       $ref: ../swagger/paths/auth/refresh/post.yaml
-  /auth/query-reset-email:
+  /auth/request-reset-email:
     post:
       $ref: ../swagger/paths/auth/send-reset-email/post.yaml
   /auth/reset-password:

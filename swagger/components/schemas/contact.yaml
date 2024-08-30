@@ -7,7 +7,7 @@ properties:
   _id:
     description: "Contact's id"
     type: string
-    example: 65e4decdd286b30065d54af9
+    example: 66cac506c0c58cc75510c10e
   name:
     description: "Contact's name"
     type: string
@@ -21,29 +21,29 @@ properties:
     type: string
     example: 'john.doe@example.com'
   isFavourite:
-    description: "Is the contact marked as favourite"
+    description: 'Is the contact marked as favourite'
     type: boolean
     example: false
   contactType:
-    description: "Type of contact"
+    description: 'Type of contact'
     type: string
     enum: ['work', 'home', 'personal']
     example: 'personal'
   userId:
     description: "User's id who owns this contact"
     type: string
-    example: 65e4decdd286b30065d54af9
+    example: 66cac506c0c58cc75510c10e
   photo:
     description: "Link to contact's photo"
     type: string
     example: https://res.cloudinary.com/uqwgdu/image/upload/contact_photo.png
   createdAt:
-    description: "Timestamp when the contact was created"
+    description: 'Timestamp when the contact was created'
     type: string
     format: date-time
     example: '2024-08-29T12:34:56.789Z'
   updatedAt:
-    description: "Timestamp when the contact was last updated"
+    description: 'Timestamp when the contact was last updated'
     type: string
     format: date-time
     example: '2024-08-29T12:34:56.789Z'

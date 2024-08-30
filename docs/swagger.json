@@ -947,7 +947,7 @@
           "_id": {
             "description": "Contact's id",
             "type": "string",
-            "example": "65e4decdd286b30065d54af9"
+            "example": "66cac506c0c58cc75510c10e"
           },
           "name": {
             "description": "Contact's name",
@@ -982,7 +982,7 @@
           "userId": {
             "description": "User's id who owns this contact",
             "type": "string",
-            "example": "65e4decdd286b30065d54af9"
+            "example": "66cac506c0c58cc75510c10e"
           },
           "photo": {
             "description": "Link to contact's photo",
