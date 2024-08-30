@@ -5,7 +5,7 @@ import { env } from '../utils/env.js';
 const PATH_JSON = path.join(
   process.cwd(),
   'src',
-  'contacts',
+  'constants',
   'google-oauth.json',
 );
 const oauth_json = JSON.parse(await readFile(PATH_JSON, { encoding: 'utf-8' }));
